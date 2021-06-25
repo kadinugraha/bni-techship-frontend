@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pengenalan Vue</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <style>
+        span{
+            color: black;
+        }
+
+        .aktif{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="nama" placeholder="Masukkan nama ..."/>
+        <input type="text" v-model="usia" placeholder="Masukkan usia ..."/>
+        <input type="radio" v-model="warna" value="red" id="merah" />
+        <label for="merah">Merah</label>
+        <input type="radio" v-model="warna" value="blue" id="biru" />
+        <label for="biru">Biru</label>
+        <div v-bind:style="{color: warna}">
+            Perkenalkan nama saya {{nama}}, usia {{usia}}th,
+            warna kesukaan saya adalah {{ warna == 'red' ? 'merah' : warna == 'blue' ? 'biru' : 'hitam' }}
+        </div>
+    </div>
+
+    <script>
+        var v = new Vue({
+            el: '#app',
+            data(){
+                return{
+                    nama: '',
+                    usia: '',
+                    warna: ''
+                }
+            }
+        });
+    </script>
+</body>
+</html>
