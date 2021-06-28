@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+    <div id="app">
+        <barang v-for="b in listBarang" v-bind:nama="b.nama" v-bind:harga="b.harga" v-on:tambah-item="tambahItem($event)"></barang>
+        <h3>Isi Cart:</h3>
+        <div v-html="output"></div>
+    </div>
+    <script>
+        Vue.component('barang', {
+            props: ['nama','harga'],
+            template: '<div>{{nama}}: Rp {{harga}} <button v-on:click="$emit(\'tambah-item\', {nama: nama, harga: harga})">Tambahkan</button></div>'
+        });
+
+        new Vue({
+            el: '#app',
+            data(){
+                return{
+                    output:'',
+                    cart: [],
+                    listBarang: [
+                        {nama: "Flashdisk", harga: 50000},
+                        {nama: "Buku Tulis", harga: 5000},
+                        {nama: "Pensil", harga: 3000},
+                    ]
+                }
+            },
+            methods: {
+                tambahItem(item){
+                    this.output = '';
+                    total = 0;
+                    newItem = true;
+                    for(var i = 0; i < this.cart.length; i++){
+                        if(this.cart[i].nama == item.nama){
+                            this.cart[i].jumlah += 1;
+                            newItem = false;
+                        }
+                        total += this.cart[i].jumlah*this.cart[i].harga;
+                        this.output += this.cart[i].jumlah+'x '+this.cart[i].nama+' = Rp '+(this.cart[i].jumlah*this.cart[i].harga)+'<br/>';
+                    }   
+                    if(newItem){
+                        this.cart.push({nama: item.nama, jumlah: 1, harga: item.harga});
+                        total += item.harga;
+                        this.output += '1x '+item.nama+' = Rp '+(item.harga)+'<br/>';
+                    }
+                    this.output += 'Total: Rp '+total;
+                }
+            }
+        });
+    </script>
+</body>
+</html>

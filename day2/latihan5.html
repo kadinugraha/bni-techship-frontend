@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <style>
+        div.chat{
+            color: blue;
+        }
+
+        div.aktif{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        Login as: <input type="text" v-model="username"/>
+        <div class="chat" v-for="chat in chats" v-bind:class="{aktif: username == chat.username}" v-on:click="info(chat.username)">{{chat.username}}: {{chat.message}}</div>
+        <div v-html="output"></div>
+    </div>
+    <script>
+        var v = new Vue({
+            el: '#app',
+            data(){
+                return{
+                    username: '',
+                    output: '',
+                    chats: [
+                        {username: 'adinugraha', message: 'halo'},
+                        {username: 'ekokuncoro', message: 'halo juga'},
+                        {username: 'aguskurniawan', message: 'selamat siang'},
+                        {username: 'aguskurniawan', message: 'sehat semua?'},
+                        {username: 'ekokuncoro', message: 'sehat'},
+                        {username: 'adinugraha', message: 'saya juga sehat'}
+                    ],
+                    users: [
+                        {username: 'adinugraha', hp: '08123456789'},
+                        {username: 'ekokuncoro', hp: '08678901234'},
+                        {username: 'aguskurniawan', hp: '09012345678'}
+                    ]
+                }
+            },
+            methods: {
+                info(username){
+                    this.output = '';
+                    for(var i = 0; i < this.users.length; i++){
+                        if(this.users[i].username == username){
+                            this.output += '<h3>Nama: '+username+', HP: '+this.users[i].hp+'</h3>';
+                            break;
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
